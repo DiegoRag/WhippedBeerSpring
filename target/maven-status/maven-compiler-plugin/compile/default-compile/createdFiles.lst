@@ -1,0 +1,14 @@
+com/whipped_beer/app/resources/dto/LoginRequest.class
+com/whipped_beer/app/config/TestConfig.class
+com/whipped_beer/app/config/SecurityConfig.class
+com/whipped_beer/app/resources/dto/LoginResponse.class
+com/whipped_beer/app/resources/UserResource.class
+com/whipped_beer/app/entities/Data.class
+com/whipped_beer/app/services/DataService.class
+com/whipped_beer/app/AppApplication.class
+com/whipped_beer/app/resources/TokenResource.class
+com/whipped_beer/app/repositories/DataRepository.class
+com/whipped_beer/app/resources/DataResource.class
+com/whipped_beer/app/entities/User.class
+com/whipped_beer/app/repositories/UserRepository.class
+com/whipped_beer/app/services/UserService.class
