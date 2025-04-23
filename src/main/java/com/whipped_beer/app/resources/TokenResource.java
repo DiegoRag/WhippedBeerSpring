@@ -33,16 +33,13 @@ public class TokenResource {
 	
 	@PostMapping("/login")
 	public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest){
-	    System.out.println("Entrou no /login");
 
 		
 		  var user = userRepository.findByUsuario(loginRequest.username());
-		  System.out.println("Usuário encontrado: " + user.get().getUsuario());
-		  System.out.println("Senha fornecida: " + loginRequest.password());
+	
 
-		  if (user.isEmpty()) {
-			    System.out.println("Usuário não encontrado: " + loginRequest.username());
-			    throw new BadCredentialsException("Usuário não encontrado!");
+		  if (user.isEmpty() || !user.get().isLoginCorrect(loginRequest, passwordEncoder)) {
+			    throw new BadCredentialsException("Usuario ou senha incorreto");
 			}
 
 			if (!user.get().isLoginCorrect(loginRequest, passwordEncoder)) {
@@ -51,7 +48,6 @@ public class TokenResource {
 			}
 
 	        
-	        System.out.println("Usuário encontrado: " + user.get().getUsuario()); // Verifique se o usuário foi encontrado.
 
 	        var now = Instant.now();
 	        var expiresIn = 30L;
@@ -63,7 +59,6 @@ public class TokenResource {
 	        		.expiresAt(now.plus(expiresIn, ChronoUnit.DAYS))
 	        		.build();
 	        var jwtValue = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
-	        System.out.println("JWT Token: " + jwtValue); // Verifique se o token está sendo gerado.
 
 	         
 	        return ResponseEntity.ok(new LoginResponse(jwtValue, expiresIn));
