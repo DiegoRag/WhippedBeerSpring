@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.whipped_beer.app.entities.User;
+import com.whipped_beer.app.resources.dto.UserRegisterDTO;
 import com.whipped_beer.app.services.UserService;
 
 @RestController
@@ -35,8 +36,14 @@ public class UserResource {
 		return ResponseEntity.ok().body(obj); 
 	}
 	
-	@PostMapping
-	public ResponseEntity<User> insert(@RequestBody User obj){
+	@PostMapping("/cadastro")
+	public ResponseEntity<User> insert(@RequestBody UserRegisterDTO dto){
+	  User obj = new User();
+	  obj.setUsuario(dto.getUsuario());
+	  obj.setNome(dto.getNome());
+	  obj.setEmail(dto.getEmail());
+	  obj.setSenha(dto.getSenha());
+	  obj.setAtivo(0);
 	  obj = service.insert(obj);
 	  URI uri = ServletUriComponentsBuilder
 			  .fromCurrentRequest()

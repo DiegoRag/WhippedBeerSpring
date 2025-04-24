@@ -2,6 +2,7 @@ package com.whipped_beer.app.resources;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -9,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +33,15 @@ public class TokenResource {
 		
 	}
 	
+	@GetMapping("/status")
+	public Map<String, Object> status() {
+	    return Map.of(
+	        "status", "OK",
+	        "timestamp", Instant.now().toString()
+	    );
+	}
+
+	
 	@PostMapping("/login")
 	public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest){
 
@@ -46,6 +57,8 @@ public class TokenResource {
 			    System.out.println("Senha incorreta para o usuário: " + loginRequest.username());
 			    throw new BadCredentialsException("Senha incorreta!");
 			}
+			
+			
 
 	        
 
