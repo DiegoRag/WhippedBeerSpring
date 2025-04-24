@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.whipped_beer.app.entities.User;
 import com.whipped_beer.app.repositories.UserRepository;
+import com.whipped_beer.app.resources.dto.UserRegisterDTO;
 
 
 
@@ -36,12 +37,16 @@ public class UserService {
 		        return obj.orElseThrow(() -> new RuntimeException("User not found"));
 		    }
 		
-		    public User insert(User obj) {
-		        // Hash the password before saving
-		        String senhaFinal = obj.getSenha();
-		        obj.hashAndSetSenha(senhaFinal, passwordEncoder); // Hash and set the password hash
-
-		        return repository.save(obj); // Save the entity with the hashed password
+		   public User insert(UserRegisterDTO dto) {
+		        // Criação do objeto User a partir do DTO de cadastro
+		        User user = new User();
+		        user.setUsuario(dto.getUsuario());
+		        user.setNome(dto.getNome());
+		        user.setEmail(dto.getEmail());
+		        user.setSenha(dto.getSenha());  // Lembre-se que a senha será hashada antes de ser salva
+		        user.hashAndSetSenha(dto.getSenha(), passwordEncoder);
+		        user.setAtivo(1);  // Usuário ativo
+		        return repository.save(user);  // Salva o usuário no banco
 		    }
 		
 		public Optional<User> findByUsuario(String usuario) {
