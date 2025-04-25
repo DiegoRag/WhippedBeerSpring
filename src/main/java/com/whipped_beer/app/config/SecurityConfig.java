@@ -79,7 +79,6 @@ public class SecurityConfig {
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         return (RSAPublicKey) keyFactory.generatePublic(keySpec);
     }
-
     private RSAPrivateKey getPrivateKey() throws Exception {
         String key = readKey(privateKeyResource);
         key = key.replace("-----BEGIN PRIVATE KEY-----", "")
