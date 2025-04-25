@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +22,7 @@ import com.whipped_beer.app.services.TokenService;
 import com.whipped_beer.app.services.UserService;
 
 @RestController
-@RequestMapping("/auth") // ou "/register"
+@RequestMapping("/auth") 
 public class AuthResource {
 	@Autowired
 	private TokenService tokenService;
