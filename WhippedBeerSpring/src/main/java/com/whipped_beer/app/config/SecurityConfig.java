@@ -44,7 +44,8 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests(authorize -> authorize
             .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-            .requestMatchers(HttpMethod.POST,"/auth/cadastro").permitAll()
+            .requestMatchers(HttpMethod.POST,"/auth/cadastro_usuario").permitAll()
+            .requestMatchers(HttpMethod.POST,"/auth/cadastro_dado").permitAll()
             .requestMatchers(HttpMethod.GET,"/health").permitAll()
             .anyRequest().authenticated())
             .csrf(csrf -> csrf.disable())

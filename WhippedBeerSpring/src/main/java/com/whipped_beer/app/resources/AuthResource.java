@@ -65,21 +65,21 @@ public class AuthResource {
     public ResponseEntity<DataRegisterDTO> insert(@Valid @RequestBody DataRegisterDTO dto) {
         // Converte o DTO de cadastro para uma entidade User
     	
-    	Data data = service.insert(dto);
+    	Data data = DataService.insert(dto);
         
 
         // Converte a entidade User para UserPublicDTO para não expor a senha
-        UserPublicDTO userPublicDTO = new UserPublicDTO(user);
+        DataRegisterDTO dataRegisterDTO = new DataRegisterDTO(data);
 
         // Cria a URI de resposta para o recurso recém-criado
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(user.getId())
+                .buildAndExpand(data.getId())
                 .toUri();
 
         // Retorna o UserPublicDTO com a URI do recurso recém-criado
-        return ResponseEntity.created(uri).body(userPublicDTO);
+        return ResponseEntity.created(uri).body(dataRegisterDTO);
     }
     
     @PostMapping("/login")

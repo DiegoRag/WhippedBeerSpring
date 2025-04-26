@@ -7,9 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.whipped_beer.app.entities.Data;
-import com.whipped_beer.app.entities.User;
 import com.whipped_beer.app.repositories.DataRepository;
-import com.whipped_beer.app.resources.dto.UserRegisterDTO;
+import com.whipped_beer.app.resources.dto.DataRegisterDTO;
 @Service
 public class DataService {
 	
@@ -22,22 +21,18 @@ public class DataService {
 	
 	public Data findById(Integer id) {
 		Optional<Data> obj = repository.findById(id);
-		return obj.get();
+		return obj.orElse(null);
 	}
 	
 	public Data insert(Data obj) {
 		return repository.save(obj);
 	}
 	
-	public User insert(UserRegisterDTO dto) {
-        // Criação do objeto User a partir do DTO de cadastro
+	public Data insert(DataRegisterDTO dto) {
         Data data = new Data();
-        user.setUsuario(dto.getUsuario());
-        user.setNome(dto.getNome());
-        user.setEmail(dto.getEmail());
-        user.setSenha(dto.getSenha());  // Lembre-se que a senha será hashada antes de ser salva
-        user.hashAndSetSenha(dto.getSenha(), passwordEncoder);
-        user.setAtivo(1);  // Usuário ativo
-        return repository.save(user);  // Salva o usuário no banco
+        data.setTemperatura(dto.getTemperatura());
+        data.setCriadoEm(dto.getCriadoEm());
+        return repository.save(data);
     }
 }
+
