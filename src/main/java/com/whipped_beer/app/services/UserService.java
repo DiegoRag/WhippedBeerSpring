@@ -32,10 +32,10 @@ public class UserService {
 			return repository.findAll();
 		}
 		
-		   public User findById(Integer id) {
-		        Optional<User> obj = repository.findById(id);
-		        return obj.orElseThrow(() -> new RuntimeException("User not found"));
-		    }
+			   public User findById(Integer id) {
+			        Optional<User> obj = repository.findById(id);
+			        return obj.orElseThrow(() -> new RuntimeException("Usuário com ID " + id + " não encontrado."));
+			    }
 		
 		   public User insert(UserRegisterDTO dto) {
 		        // Criação do objeto User a partir do DTO de cadastro

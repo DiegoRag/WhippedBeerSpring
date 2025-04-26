@@ -12,14 +12,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.whipped_beer.app.entities.Data;
 import com.whipped_beer.app.entities.User;
 import com.whipped_beer.app.repositories.UserRepository;
+import com.whipped_beer.app.resources.dto.DataRegisterDTO;
 import com.whipped_beer.app.resources.dto.LoginRequest;
 import com.whipped_beer.app.resources.dto.LoginResponse;
 import com.whipped_beer.app.resources.dto.UserPublicDTO;
 import com.whipped_beer.app.resources.dto.UserRegisterDTO;
+import com.whipped_beer.app.services.DataService;
 import com.whipped_beer.app.services.TokenService;
 import com.whipped_beer.app.services.UserService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/auth") 
@@ -34,12 +39,14 @@ public class AuthResource {
    
     
     @Autowired
-    private UserService service;
+    private UserService UserService;
+    @Autowired
+    private DataService DataService;
 
-    @PostMapping("/cadastro")
-    public ResponseEntity<UserPublicDTO> insert(@RequestBody UserRegisterDTO dto) {
+    @PostMapping("/cadastro_usuario")
+    public ResponseEntity<UserPublicDTO> insert(@Valid @RequestBody UserRegisterDTO dto) {
         // Converte o DTO de cadastro para uma entidade User
-        User user = service.insert(dto);
+        User user = UserService.insert(dto);
 
         // Converte a entidade User para UserPublicDTO para não expor a senha
         UserPublicDTO userPublicDTO = new UserPublicDTO(user);
@@ -53,6 +60,27 @@ public class AuthResource {
 
         // Retorna o UserPublicDTO com a URI do recurso recém-criado
         return ResponseEntity.created(uri).body(userPublicDTO);
+    }
+    
+    @PostMapping("/cadastro_dado")
+    public ResponseEntity<DataRegisterDTO> insert(@Valid @RequestBody DataRegisterDTO dto) {
+        // Converte o DTO de cadastro para uma entidade User
+    	
+    	Data data = DataService.insert(dto);
+        
+
+        // Converte a entidade User para UserPublicDTO para não expor a senha
+        DataRegisterDTO dataRegisterDTO = new DataRegisterDTO(data);
+
+        // Cria a URI de resposta para o recurso recém-criado
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(data.getId())
+                .toUri();
+
+        // Retorna o UserPublicDTO com a URI do recurso recém-criado
+        return ResponseEntity.created(uri).body(dataRegisterDTO);
     }
     
     @PostMapping("/login")

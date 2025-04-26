@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.whipped_beer.app.entities.Data;
 import com.whipped_beer.app.repositories.DataRepository;
+import com.whipped_beer.app.resources.dto.DataRegisterDTO;
 @Service
 public class DataService {
 	
@@ -20,10 +21,18 @@ public class DataService {
 	
 	public Data findById(Integer id) {
 		Optional<Data> obj = repository.findById(id);
-		return obj.get();
+		return obj.orElse(null);
 	}
 	
 	public Data insert(Data obj) {
 		return repository.save(obj);
 	}
+	
+	public Data insert(DataRegisterDTO dto) {
+        Data data = new Data();
+        data.setTemperatura(dto.getTemperatura());
+        data.setCriadoEm(dto.getCriadoEm());
+        return repository.save(data);
+    }
 }
+
