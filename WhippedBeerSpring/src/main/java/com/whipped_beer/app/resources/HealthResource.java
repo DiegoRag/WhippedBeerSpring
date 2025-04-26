@@ -21,7 +21,7 @@ public class HealthResource {
 	
     public boolean isServerOnline() {
         try {
-            URL url = new URL("https://api.whippedbeer.grmtechs.com/health");
+            URL url = new URL("https://api.whippedbeer.grmtechs.com");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setConnectTimeout(3000); // 3s
