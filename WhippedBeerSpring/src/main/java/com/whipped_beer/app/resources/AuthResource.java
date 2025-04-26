@@ -40,6 +40,7 @@ public class AuthResource {
     
     @Autowired
     private UserService UserService;
+    @Autowired
     private DataService DataService;
 
     @PostMapping("/cadastro_usuario")
