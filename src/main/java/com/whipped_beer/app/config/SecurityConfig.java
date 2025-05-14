@@ -47,9 +47,7 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            // HABILITA CORS USANDO O BEAN corsConfigurationSource()
             .cors(Customizer.withDefaults())
-
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers(HttpMethod.POST, "/login").permitAll()
                 .anyRequest().authenticated()
