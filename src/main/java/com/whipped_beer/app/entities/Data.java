@@ -1,8 +1,10 @@
 package com.whipped_beer.app.entities;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,10 +23,11 @@ public class Data implements Serializable {
  @Column(name="id_dado")
  private Integer id;
  private double temperatura;
- private LocalDate criadoEm;
+ @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+ private LocalDateTime criadoEm;
  
  public Data() {}
- public Data(Integer id, double temperatura, LocalDate criadoEm) {
+ public Data(Integer id, double temperatura, LocalDateTime criadoEm) {
 	 this.id = id;
 	 this.temperatura = temperatura;
 	 this.criadoEm = criadoEm;
@@ -42,10 +45,10 @@ public double getTemperatura() {
 public void setTemperatura(double temperatura) {
 	this.temperatura = temperatura;
 }
-public LocalDate getCriadoEm() {
+public LocalDateTime getCriadoEm() {
 	return criadoEm;
 }
-public void setCriadoEm(LocalDate criadoEm) {
+public void setCriadoEm(LocalDateTime criadoEm) {
 	this.criadoEm = criadoEm;
 }
 @Override
