@@ -7,6 +7,7 @@ import java.security.interfaces.RSAPublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -47,17 +48,16 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            // HABILITA CORS USANDO O BEAN corsConfigurationSource()
-            .cors(Customizer.withDefaults())
-
-            .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers(HttpMethod.POST, "/login").permitAll()
-                .anyRequest().authenticated()
-            )
-            .csrf(csrf -> csrf.disable())
-            .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
+          .cors(Customizer.withDefaults())
+          .authorizeHttpRequests(authorize -> authorize
+              .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+              .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+              .anyRequest().authenticated()
+          )
+          .csrf(csrf -> csrf.disable())
+          .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
+          .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+    
         return http.build();
     }
 
