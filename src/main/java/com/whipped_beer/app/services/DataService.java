@@ -1,5 +1,6 @@
 package com.whipped_beer.app.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,10 +30,10 @@ public class DataService {
 	}
 	
 	public Data insert(DataRegisterDTO dto) {
-        Data data = new Data();
-        data.setTemperatura(dto.getTemperatura());
-        data.setCriadoEm(dto.getCriadoEm());
-        return repository.save(data);
-    }
+	    Data data = new Data();
+	    data.setTemperatura(dto.getTemperatura());
+
+	    return repository.save(data);
+	}
 }
 

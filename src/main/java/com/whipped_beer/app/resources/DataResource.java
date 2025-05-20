@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.whipped_beer.app.entities.Data;
+import com.whipped_beer.app.resources.dto.DataRegisterDTO;
 import com.whipped_beer.app.services.DataService;
+
+import jakarta.validation.Valid;
 @RestController
 @RequestMapping(value = "/dados")
 public class DataResource {
@@ -38,14 +41,15 @@ public class DataResource {
 		
 		
 		@PostMapping
-		public ResponseEntity<Data> insert(@RequestBody Data obj){
-		  obj = service.insert(obj);
+		public ResponseEntity<DataRegisterDTO> insert(@Valid @RequestBody DataRegisterDTO dto){
+		  Data data = service.insert(dto);
+		    DataRegisterDTO dataRegisterDTO = new DataRegisterDTO(data);
 		  URI uri = ServletUriComponentsBuilder
 				  .fromCurrentRequest()
 				  .path("/{id}")
-				  .buildAndExpand(obj.getId())
+				  .buildAndExpand(data.getId())
 				  .toUri();
-		  return ResponseEntity.created(uri).body(obj);
+		  return ResponseEntity.created(uri).body(dataRegisterDTO);
 		}
 	 	
 		

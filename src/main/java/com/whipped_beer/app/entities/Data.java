@@ -1,7 +1,7 @@
 package com.whipped_beer.app.entities;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -9,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 @Entity
 @Table(name ="dados")
@@ -21,10 +22,18 @@ public class Data implements Serializable {
  @Column(name="id_dado")
  private Integer id;
  private double temperatura;
- private LocalDate criadoEm;
+ @Column(name = "criado_em", insertable = false, updatable = false)
+ private LocalDateTime criadoEm;
+ 
+ @PrePersist
+ public void prePersist() {
+     if (criadoEm == null) {
+         criadoEm = LocalDateTime.now();
+     }
+ }
  
  public Data() {}
- public Data(Integer id, double temperatura, LocalDate criadoEm) {
+ public Data(Integer id, double temperatura, LocalDateTime criadoEm) {
 	 this.id = id;
 	 this.temperatura = temperatura;
 	 this.criadoEm = criadoEm;
@@ -42,10 +51,10 @@ public double getTemperatura() {
 public void setTemperatura(double temperatura) {
 	this.temperatura = temperatura;
 }
-public LocalDate getCriadoEm() {
+public LocalDateTime getCriadoEm() {
 	return criadoEm;
 }
-public void setCriadoEm(LocalDate criadoEm) {
+public void setCriadoEm(LocalDateTime criadoEm) {
 	this.criadoEm = criadoEm;
 }
 @Override

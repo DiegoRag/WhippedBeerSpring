@@ -1,7 +1,8 @@
 package com.whipped_beer.app.resources.dto;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.whipped_beer.app.entities.Data;
 
 public class DataRegisterDTO {
@@ -9,7 +10,8 @@ public class DataRegisterDTO {
 	
 	private Integer id;
 	private double temperatura;
-	private LocalDate criadoEm;
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+	private LocalDateTime criadoEm;
 	
 	
 	
@@ -32,10 +34,10 @@ public class DataRegisterDTO {
 	public void setTemperatura(double temperatura) {
 		this.temperatura = temperatura;
 	}
-	public LocalDate getCriadoEm() {
+	public LocalDateTime getCriadoEm() {
 		return criadoEm;
 	}
-	public void setCriadoEm(LocalDate criadoEm) {
+	public void setCriadoEm(LocalDateTime criadoEm) {
 		this.criadoEm = criadoEm;
 	}
 	public double getTemperatura() {
